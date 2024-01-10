@@ -1,3 +1,4 @@
+const { response } = require('express')
 const UserModel = require('../models/userModel')
 
 const userController = {
@@ -42,6 +43,27 @@ const userController = {
             }
 
             console.log("Erro ao buscar usuários: " + error)
+            res.status(500).json(response)
+        }
+    },
+    getUserById: async(req, res) => {
+        const { user_id }= req.body
+        try {
+            const user = await UserModel.getUserById(user_id)
+            const response = {
+                error: false,
+                mensagem: "Usuário encontrado com sucesso!",
+                user: user[0]
+            }
+
+            res.status(200).json(response)
+        } catch (error){
+            const response = {
+                error: true,
+                mensagem: "Erro ao buscar o usuário de id: " + user_id
+            }
+
+            console.log("Erro ao buscar usuário: " + error)
             res.status(500).json(response)
         }
     }

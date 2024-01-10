@@ -25,8 +25,19 @@ const User = {
             throw error;
         }
     },
-    getUserById: async () => {
-
+    getUserById: async (user_id) => {
+        try {
+            const query = 'SELECT * FROM users WHERE id_user = ?'
+            const result = await connection.promise().query(query, user_id)
+            
+            console.log("Usuário encontrado com sucesso")
+            console.log(result[0])
+            
+            return result[0]
+        }catch (error){
+            console.log(error)
+            throw error;
+        }
     },
 }
 
