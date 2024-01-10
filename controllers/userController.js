@@ -1,9 +1,9 @@
-const { response } = require('express')
 const UserModel = require('../models/userModel')
 
 const userController = {
     createNewUser: async (req, res) => {
         const { name, lastname, email, phone } = req.body
+        
         try {
             const newUser = await UserModel.createNewUser(name, lastname, email, phone)
             const response = {
@@ -64,6 +64,35 @@ const userController = {
             }
 
             console.log("Erro ao buscar usuário: " + error)
+            res.status(500).json(response)
+        }
+    },
+    deleteUserById: async (req, res) => {
+        const { user_id } = req.body
+        try {
+            const userDeleted = await UserModel.deleteUserById(user_id)
+            if(userDeleted.affectedRows > 0){
+                const response = {
+                    error: false,
+                    mensagem: "Usuário deletado com sucesso!",
+                    userDeleted: userDeleted[0]
+                }
+                res.status(200).json(response)
+            } else {
+                const response = {
+                    error: true,
+                    mensagem: "Usuário não encontrado"
+                }
+                res.status(404).json(response)
+            }
+
+        }catch (error){
+            const response = {
+                error: true,
+                mensagem: "Erro ao deletar o usuário de id: " + user_id
+            }
+
+            console.log("Erro ao deletar usuário: " + error)
             res.status(500).json(response)
         }
     }
