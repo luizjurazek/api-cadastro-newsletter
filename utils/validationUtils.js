@@ -1,12 +1,17 @@
-function validateCreateUserFields(user_info){
-    const { name, lastname, email, phone } = user_info
+// Função para validar os campos necessários ao criar um novo usuário
+function validateCreateUserFields(user_info) {
+    // Extrai as informações relevantes do objeto user_info
+    const { name, lastname, email, phone } = user_info;
 
-    if(name == "" || name == null || lastname == "" || lastname == null || email == "" || email == null || phone == "" || phone == null){
-        return false
+    // Verifica se algum dos campos obrigatórios está vazio ou nulo
+    if (name === "" || name === null || lastname === "" || lastname === null || email === "" || email === null || phone === "" || phone === null) {
+        // Retorna falso se algum campo estiver vazio ou nulo
+        return false;
     } else {
-        return true
+        // Retorna verdadeiro se todos os campos obrigatórios estiverem preenchidos
+        return true;
     }
 }
 
-module.exports = validateCreateUser
-
+// Exporta a função de validação para ser utilizada em outros arquivos
+module.exports = validateCreateUserFields;
